@@ -1349,3 +1349,53 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 /* Name gradient sweeps across the name itself */
 .hero-name { width: fit-content; max-width: 100%; background-image: linear-gradient(100deg, var(--mint) 0%, var(--coral) 55%, var(--amber) 100%); }
+
+/* Experience summary + DevOps tag */
+.exp-summary { list-style: none; margin: 1.1rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .6rem; }
+.exp-summary li {
+  padding: .45rem .95rem; border-radius: 999px;
+  border: 1px solid var(--line); background: rgba(255,255,255,.04);
+  color: var(--muted); font-size: .88rem; font-weight: 600;
+}
+.exp-summary li strong { color: var(--mint); }
+.exp-summary li:last-child { border-color: rgba(244,114,182,.4); background: rgba(244,114,182,.1); }
+.exp-summary li:last-child strong { color: var(--amber); }
+.t-date small {
+  display: block; margin-top: .3rem; color: var(--amber);
+  font-size: .74rem; font-weight: 700; letter-spacing: .02em;
+}
+
+/* About: story on the left, two separate experience cards stacked on the right */
+.bento-story { grid-row: span 2; }
+.bento-xp.is-devops {
+  border-color: rgba(34,211,238,.35);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34,211,238,.2), transparent 55%),
+    var(--surface-strong);
+}
+.bento-xp.is-devops .xp-value { background-image: linear-gradient(135deg, var(--mint), var(--coral)); -webkit-background-clip: text; background-clip: text; }
+.bento-xp.is-devops .xp-plus { color: var(--mint); }
+.bento-xp .xp-label { font-weight: 700; }
+@media (max-width: 1024px) { .bento-story { grid-row: auto; } }
+
+/* keep gradient numbers visible (card paragraph colour was overriding it) */
+.bento-card .xp-value { color: transparent; }
+.bento-card .xp-plus { color: var(--amber); }
+.bento-xp.is-devops .xp-plus { color: var(--mint); }
+.bento-story { display: flex; flex-direction: column; }
+.story-focus { margin-top: auto !important; padding-top: 1rem; }
+@media (max-width: 1024px) { .story-focus { margin-top: .5rem !important; } }
+
+/* About: Who I am + two experience cards in one row (3 columns) */
+.bento-story { grid-column: span 4; grid-row: auto; }
+.bento-xp { grid-column: span 4; }
+.bento-card .xp-value { font-size: clamp(3.6rem, 6vw, 5rem); }
+@media (max-width: 1024px) {
+  .bento-story { grid-column: span 12; }
+  .bento-xp { grid-column: span 6; }
+}
+@media (max-width: 720px) {
+  .bento-xp { grid-column: span 12; }
+}
+.bento-xp { align-content: center; }
+.bento-xp .xp-plus { margin-top: .1rem; }

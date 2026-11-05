@@ -121,37 +121,34 @@
     reveals.forEach((el) => el.classList.add("is-visible"));
   }
 
-  /* ---------- Experience counter ---------- */
-  const countEl = document.querySelector("[data-count]");
-  if (countEl) {
-    const target = Number(countEl.getAttribute("data-count") || "6");
-    const animate = () => {
-      const start = performance.now();
-      const duration = 1100;
-      const tick = (now) => {
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        countEl.textContent = String(Math.round(target * eased));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
+  /* ---------- Experience counters ---------- */
+  const animateCount = (el) => {
+    const target = Number(el.getAttribute("data-count") || "0");
+    const start = performance.now();
+    const duration = 1100;
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(target * eased));
+      if (p < 1) requestAnimationFrame(tick);
     };
-
-    if ("IntersectionObserver" in window) {
-      const cio = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            animate();
-            cio.disconnect();
-          });
-        },
-        { threshold: 0.4 }
-      );
-      cio.observe(countEl);
-    } else {
-      animate();
-    }
+    requestAnimationFrame(tick);
+  };
+  const counters = document.querySelectorAll("[data-count]");
+  if ("IntersectionObserver" in window) {
+    const cio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          animateCount(entry.target);
+          cio.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((el) => cio.observe(el));
+  } else {
+    counters.forEach(animateCount);
   }
 
   /* ---------- Skill bars ---------- */
